@@ -1,0 +1,4 @@
+# depslib dependency file v1.0
+1726573695 source:c:\cpp\ex03\main.cpp
+	<iostream>
+
