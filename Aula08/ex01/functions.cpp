@@ -23,34 +23,28 @@ int verificaListaVazia(ListaAlunos *lista)
     return lista->quantidade == 0 ? 1 : 0;
 }
 
-void adicionarAlunos(ListaAlunos *lista)
+void adicionarAluno(Aluno *aluno)
 {
-    for (int i = 0; i < QUANTIDADE_ALUNOS; i++)
-    {
-        if (verificaListaCheia(lista))
-        {
-            cout << "Lista cheia!" << endl;
-            return;
-        }
+    cout << "Digite o nome do aluno: ";
+    getline(cin, aluno->nome);
 
-        cout << "========= Cadastro " << i + 1 << " =========" << endl;
+    cout << "Digite a matrícula do aluno: ";
+    cin >> aluno->matricula;
 
-        cout << "Digite o nome do aluno: ";
-        getline(cin, lista->alunos[lista->quantidade].nome);
+    cout << "Digite a nota do aluno: ";
+    cin >> aluno->nota;
 
-        cout << "Digite a matrícula do aluno: ";
-        cin >> lista->alunos[lista->quantidade].matricula;
-
-        cout << "Digite a nota do aluno: ";
-        cin >> lista->alunos[lista->quantidade].nota;
-
-        lista->quantidade++;
-        cin.ignore();
-    }
+    cin.ignore();
 }
+
 
 void exibirAlunos(ListaAlunos *lista)
 {
+    if(verificaListaVazia(lista)){
+        cout << "Lista vazia!" << endl;
+        return;
+    }
+
     for (int i = 0; i < lista->quantidade; i++)
     {
         cout << "========= Aluno " << i + 1 << " =========" << endl;
@@ -91,6 +85,7 @@ int inserirAlunoInicio(ListaAlunos *lista, Aluno aluno){
     return 1;
 }
 
+//array precisa estar ordenado
 int inserirAlunoOrdenado(ListaAlunos *lista, Aluno aluno){
     //se a lista estiver cheia
     if(verificaListaCheia(lista)){
@@ -128,20 +123,26 @@ int inserirAlunoOrdenado(ListaAlunos *lista, Aluno aluno){
     return 1;
 }
 
-void removerFinal(ListaAlunos *lista){
-    if(verificaListaVazia(lista)){
-        cout << "Lista vazia!" << endl;
-        return;
-    }
+int removerAlunoFinal(ListaAlunos* lista) {
+
+    // Implement the function logic here
+
+    // Example implementation:
+
+    if (lista->quantidade == 0) return 0; // Lista vazia
+
+    // Remove the last element logic
 
     lista->quantidade--;
+
+    return 1; // Sucesso
 }
 
-void removerInicio(ListaAlunos *lista){
+int removerAlunoInicio(ListaAlunos *lista){
     //verifica se a lista está vazia
     if(verificaListaVazia(lista)){
         cout << "Lista vazia!" << endl;
-        return;
+        return 0;
     }
 
     for(int i = 0; i < lista->quantidade; i++){
@@ -151,12 +152,14 @@ void removerInicio(ListaAlunos *lista){
 
     //diminui a quantidade de alunos
     lista->quantidade--;
+    return 1;
 }
-void removerPorMatricula(ListaAlunos *lista, int matricula){
+
+int removerPorMatricula(ListaAlunos *lista, int matricula){
     //verifica se a lista está vazia
     if(verificaListaVazia(lista)){
         cout << "Lista vazia!" << endl;
-        return;
+        return 0;
     }
 
     //define a posição do aluno
@@ -180,10 +183,27 @@ void removerPorMatricula(ListaAlunos *lista, int matricula){
 
     //passa o vetor pro lado
     for(int i = posicao; i < lista->quantidade; i++){
-        //sobrescreve o aluno na posição i com o aluno na posição i + 1 
+        //sobrescreve o aluno na posição i com o aluno na posição i + 1
         lista->alunos[i] = lista->alunos[i + 1];
     }
 
     //diminui a quantidade de alunos
     lista->quantidade--;
+    return 1;
+}
+
+void exibirLista(ListaAlunos lista){
+    if(verificaListaVazia(&lista)){
+        cout << "Lista vazia!" << endl;
+        return;
+    }
+
+    for (int i = 0; i < lista.quantidade; i++)
+    {
+        cout << "========= Aluno " << i + 1 << " =========" << endl;
+        cout << "Nome: " << lista.alunos[i].nome << endl;
+        cout << "Matrícula: " << lista.alunos[i].matricula << endl;
+        cout << "Nota: " << lista.alunos[i].nota << endl;
+        cout << "===========================" << endl;
+    }
 }
